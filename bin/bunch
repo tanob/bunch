@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+require "bunch"
+require "bunch/cli"
+
+Bunch::CLI.start
+

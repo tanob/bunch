@@ -1,6 +1,9 @@
 module Bunch
   class Repo
-    def initialize(repo_spec)
+    attr_reader :spec
+
+    def initialize(spec)
+      @spec = spec
     end
   end
 end
