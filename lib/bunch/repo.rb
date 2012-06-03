@@ -6,6 +6,11 @@ module Bunch
       @spec = spec
       @group = options.delete(:group)
     end
+
+    def directory
+      git_directory = @spec.split("/").last
+      git_directory.chomp(".git")
+    end
   end
 end
 

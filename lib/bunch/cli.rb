@@ -17,6 +17,16 @@ module Bunch
       end
     end
 
+    desc "foreach command", "Execute a command for each repo"
+    def foreach(*args)
+      command = args.join(' ')
+      definition = DSL.new(bunch_spec).to_definition
+
+      definition.repos.each do |repo|
+        Kernel.system("cd #{repo.directory} && #{command}")
+      end
+    end
+
     private
     def bunch_spec
       raise 'Bunchfile does not exist.' unless Bunch.file.file?

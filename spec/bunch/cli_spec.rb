@@ -41,6 +41,18 @@ describe Bunch::CLI do
     end
   end
 
+  describe :foreach do
+    it "should execute the command for each of the repos" do
+      bunchfile <<-EOB
+      repo "git@example.com:repo/repo.git"
+      EOB
+
+      Kernel.should_receive(:system).with("cd repo && git status")
+
+      Bunch::CLI.start(["foreach", "git", "status"])
+    end
+  end
+
   def bunchfile(spec)
     Bunch.stub!(:file => FakeBunchfile.new(spec))
   end
