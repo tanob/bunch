@@ -51,6 +51,23 @@ describe Bunch::CLI do
 
       Bunch::CLI.start(["foreach", "git", "status"])
     end
+
+    it "should support foreach to a group of repos" do
+      bunchfile <<-EOB
+      group :testing do
+        repo "git@example.com:repo/test1.git"
+      end
+      group :apps do
+        repo "git@example.com:repo/app.git"
+      end
+      repo "git@example.com:repo/repo.git"
+      EOB
+
+      Kernel.should_receive(:system).with("cd test1 && git status")
+      Kernel.should_receive(:system).with("cd app && git status")
+
+      Bunch::CLI.start(["foreach", "-g", "testing", "apps", "--", "git", "status"])
+    end
   end
 
   def bunchfile(spec)
