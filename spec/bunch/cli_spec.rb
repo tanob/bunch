@@ -9,7 +9,9 @@ describe Bunch::CLI do
   describe :clone do
     it "should clone all repos specified" do
       bunchfile <<-EOB
-      repo "git@example.com:repo/repo1.git"
+      group :apps do
+        repo "git@example.com:repo/repo1.git"
+      end
       repo "git@example.com:repo/repo2.git"
       EOB
 
@@ -44,9 +46,13 @@ describe Bunch::CLI do
   describe :foreach do
     it "should execute the command for each of the repos" do
       bunchfile <<-EOB
+      group :test do
+        repo "git@example.com:repo/test.git"
+      end
       repo "git@example.com:repo/repo.git"
       EOB
 
+      Kernel.should_receive(:system).with("cd test && git status")
       Kernel.should_receive(:system).with("cd repo && git status")
 
       Bunch::CLI.start(["foreach", "git", "status"])

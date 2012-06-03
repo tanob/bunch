@@ -5,7 +5,7 @@ module Bunch
     desc "clone", "Clone the repos specified in Bunchfile"
     method_option :group,
       :type    => :array,
-      :default => [:default],
+      :default => [],
       :aliases => "-g",
       :desc    => "Clone only repos in the group"
     def clone
@@ -20,7 +20,7 @@ module Bunch
     desc "foreach command", "Execute a command for each repo"
     method_option :group,
       :type    => :array,
-      :default => [:default],
+      :default => [],
       :aliases => "-g",
       :desc    => "Executes the command only for repos in the groups. Use -- to indicate the end of the group list and the start of the command to be executed."
     def foreach(*args)
