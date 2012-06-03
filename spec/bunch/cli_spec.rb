@@ -68,6 +68,16 @@ describe Bunch::CLI do
 
       Bunch::CLI.start(["foreach", "-g", "testing", "apps", "--", "git", "status"])
     end
+
+    it "should raise an error if command is not specified" do
+      bunchfile <<-EOB
+      repo "git@example.com:repo/repo.git"
+      EOB
+
+      lambda {
+        Bunch::CLI.start(["foreach"])
+      }.should raise_error("Command is empty!")
+    end
   end
 
   def bunchfile(spec)

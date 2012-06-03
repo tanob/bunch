@@ -25,9 +25,11 @@ module Bunch
       :desc    => "Executes the command only for repos in the groups. Use -- to indicate the end of the group list and the start of the command to be executed."
     def foreach(*args)
       groups = options[:group].map(&:to_sym)
-      command = args.join(' ').gsub(/^\s*--?\s*/, '')
-      definition = DSL.new(bunch_spec).to_definition
+      command = args.join(' ').gsub(/^\s*--?\s*/, '').strip
 
+      raise "Command is empty!" if command.empty?
+
+      definition = DSL.new(bunch_spec).to_definition
       definition.repos_for(groups).each do |repo|
         Kernel.system("cd #{repo.directory} && #{command}")
       end
