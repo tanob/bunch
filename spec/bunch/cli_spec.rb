@@ -50,7 +50,7 @@ describe Bunch::CLI do
       @content = content
     end
 
-    def exist?
+    def file?
       true
     end
 
@@ -60,7 +60,7 @@ describe Bunch::CLI do
   end
 
   class NotFoundBunchfile
-    def exist?
+    def file?
       false
     end
   end
