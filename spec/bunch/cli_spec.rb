@@ -86,6 +86,30 @@ describe Bunch::CLI do
     end
   end
 
+  describe :status do
+    before do
+      bunchfile <<-EOB
+      repo "git@example.com:repo/repo1.git"
+      group :test do
+        repo "git@example.com:repo/repo2.git"
+      end
+      EOB
+    end
+
+    it "should show the git status for all repos" do
+      Kernel.should_receive(:system).with("cd repo1 && git status")
+      Kernel.should_receive(:system).with("cd repo2 && git status")
+
+      Bunch::CLI.start(["status"])
+    end
+
+    it "should show the git status only for repos in the groups" do
+      Kernel.should_receive(:system).with("cd repo2 && git status")
+
+      Bunch::CLI.start(["status", "-g", "test"])
+    end
+  end
+
   def bunchfile(spec)
     Bunch.stub!(:file => FakeBunchfile.new(spec))
   end

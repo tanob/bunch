@@ -35,6 +35,22 @@ module Bunch
       end
     end
 
+    desc "status", "Shows the repo working directory status"
+    method_option :group,
+      :type    => :array,
+      :default => [],
+      :aliases => "-g",
+      :desc    => "Shows the status only for the repos in the groups"
+    def status
+      groups = options[:group].map(&:to_sym)
+      command = "git status"
+
+      definition = DSL.new(bunch_spec).to_definition
+      definition.repos_for(groups).each do |repo|
+        Kernel.system("cd #{repo.directory} && #{command}")
+      end
+    end
+
     private
     def bunch_spec
       raise 'Bunchfile does not exist.' unless Bunch.file.file?
