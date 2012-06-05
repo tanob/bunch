@@ -7,7 +7,7 @@ module Bunch
       :type    => :array,
       :default => [],
       :aliases => "-g",
-      :desc    => "Clone only repos in the group"
+      :desc    => "Clone only repos in the groups"
     def clone
       groups = options[:group].map(&:to_sym)
       definition = DSL.new(bunch_spec).to_definition
