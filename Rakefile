@@ -3,4 +3,9 @@ require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new
 
-task :default => :spec
+task :"travis-lint" do
+  sh "travis-lint"
+end
+
+task :default => [:"travis-lint", :spec]
+
