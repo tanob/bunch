@@ -19,7 +19,7 @@ module Bunch
     end
 
     def repo(repo_spec)
-      @repos << Repo.new(repo_spec, group: @current_group)
+      @repos << Repo.new(repo_spec, :group => @current_group)
     end
   end
 end
