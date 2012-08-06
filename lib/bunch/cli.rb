@@ -14,7 +14,7 @@ module Bunch
     group_option "Clone only repos in the groups"
     def clone
       repos.each do |repo|
-        Git.clone!(repo.spec)
+        repo.clone!
       end
     end
 

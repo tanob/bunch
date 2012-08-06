@@ -1,10 +1,14 @@
 module Bunch
   class Repo
-    attr_reader :spec, :group
+    attr_reader :group
 
     def initialize(spec, options)
       @spec = spec
       @group = options.delete(:group)
+    end
+
+    def clone!
+      Git.clone!(@spec)
     end
 
     def directory
