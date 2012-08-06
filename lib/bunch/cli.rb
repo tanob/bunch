@@ -25,7 +25,7 @@ module Bunch
       raise "Command is empty!" if command.empty?
 
       repos.each do |repo|
-        Kernel.system("cd #{repo.directory} && #{command}")
+        repo.execute_in_workdir(command)
       end
     end
 
@@ -35,7 +35,7 @@ module Bunch
       command = "git status"
 
       repos.each do |repo|
-        Kernel.system("cd #{repo.directory} && #{command}")
+        repo.execute_in_workdir(command)
       end
     end
 

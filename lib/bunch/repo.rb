@@ -11,6 +11,11 @@ module Bunch
       Git.clone!(@spec)
     end
 
+    def execute_in_workdir(command)
+      Kernel.system("cd #{directory} && #{command}")
+    end
+
+    private
     def directory
       git_directory = @spec.split("/").last
       git_directory.chomp(".git")
