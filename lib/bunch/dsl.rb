@@ -18,8 +18,8 @@ module Bunch
       @current_group = :default
     end
 
-    def repo(repo_spec)
-      @repos << Repo.new(Git.new(repo_spec), :group => @current_group)
+    def repo(repo_spec, options = {})
+      @repos << Repo.new(Git.new(repo_spec), options.merge(:group => @current_group))
     end
   end
 end

@@ -21,6 +21,22 @@ describe Bunch::CLI do
       Bunch::CLI.start(["clone"])
     end
 
+    it "should clone and checkout revision specified" do
+      bunchfile <<-EOB
+      group :apps do
+        repo "git@example.com:repo/repo1.git", :revision => "foo"
+      end
+      repo "git@example.com:repo/repo2.git", :revision => "bar"
+      EOB
+
+      Kernel.should_receive(:system).with("git clone git@example.com:repo/repo1.git")
+      Kernel.should_receive(:system).with("cd repo1 && git checkout foo")
+      Kernel.should_receive(:system).with("git clone git@example.com:repo/repo2.git")
+      Kernel.should_receive(:system).with("cd repo2 && git checkout bar")
+
+      Bunch::CLI.start(["clone"])
+    end
+
     it "should raise error if Bunchfile does not exist" do
       lambda {
         Bunch::CLI.start(["clone"])
