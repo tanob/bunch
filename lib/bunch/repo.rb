@@ -2,23 +2,17 @@ module Bunch
   class Repo
     attr_reader :group
 
-    def initialize(spec, options)
-      @spec = spec
+    def initialize(git_repo, options)
+      @git_repo = git_repo
       @group = options.delete(:group)
     end
 
     def clone!
-      Git.clone!(@spec)
+      @git_repo.clone!
     end
 
     def execute_in_workdir(command)
-      Kernel.system("cd #{directory} && #{command}")
-    end
-
-    private
-    def directory
-      git_directory = @spec.split("/").last
-      git_directory.chomp(".git")
+      Kernel.system("cd #{@git_repo.directory} && #{command}")
     end
   end
 end

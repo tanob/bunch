@@ -15,8 +15,8 @@ describe Bunch::CLI do
       repo "git@example.com:repo/repo2.git"
       EOB
 
-      Bunch::Git.should_receive(:clone!).with('git@example.com:repo/repo1.git')
-      Bunch::Git.should_receive(:clone!).with('git@example.com:repo/repo2.git')
+      Kernel.should_receive(:system).with('git clone git@example.com:repo/repo1.git')
+      Kernel.should_receive(:system).with('git clone git@example.com:repo/repo2.git')
 
       Bunch::CLI.start(["clone"])
     end
@@ -36,8 +36,8 @@ describe Bunch::CLI do
       repo "git@example.com:repo/repo.git"
       EOB
 
-      Bunch::Git.should_receive(:clone!).with('git@example.com:repo/app1.git')
-      Bunch::Git.should_receive(:clone!).with('git@example.com:repo/app2.git')
+      Kernel.should_receive(:system).with('git clone git@example.com:repo/app1.git')
+      Kernel.should_receive(:system).with('git clone git@example.com:repo/app2.git')
 
       Bunch::CLI.start(["clone", "-g", "apps"])
     end
